@@ -7,3 +7,4 @@ MANIFEST.bak
 Build
 Makefile
 inc
+pm_to_blib
