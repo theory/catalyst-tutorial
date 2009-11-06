@@ -4,24 +4,27 @@ use strict;
 use warnings;
 use parent 'Template::Declare::Catalyst';
 use Template::Declare::Tags;
+use MyApp::Templates::HTML 'wrapper';
 
 template list => sub {
     my ($self, $args) = @_;
-    table {
-        row {
-            th { 'Title'  };
-            th { 'Rating' };
-            th { 'Author' };
-        };
-        my $sth = $args->{books};
-        while (my $book = $sth->fetchrow_hashref) {
+    wrapper {
+        table {
             row {
-                cell { $book->{title}  };
-                cell { $book->{rating} };
-                cell { $book->{author} };
+                th { 'Title'  };
+                th { 'Rating' };
+                th { 'Author' };
+            };
+            my $sth = $args->{books};
+            while (my $book = $sth->fetchrow_hashref) {
+                row {
+                    cell { $book->{title}   };
+                    cell { $book->{rating}  };
+                    cell { $book->{authors} };
+                };
             };
         };
-    };
+    } $self->c, $args;
 };
 
 =head1 NAME
