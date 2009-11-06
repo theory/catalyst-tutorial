@@ -35,6 +35,14 @@ MyApp::Templates::HTML::Books - HTML::Books templates for MyApp
 
 HTML::Books templates for MyApp.
 
+=head1 TEMPLATES
+
+=head2 list
+
+Outputs a list of books. There must be a DBI statement handle stored in the
+argument hash under the C<books> key, and from which the title, rating, and
+authors can be fetched for each book.
+
 =head1 SEE ALSO
 
 =over

@@ -81,6 +81,16 @@ MyApp::Templates::HTML - HTML templates for MyApp
 
 HTML templates for MyApp.
 
+=head1 TEMPLATES
+
+=head2 wrapper
+
+Wrapper template called by all page view templates that wraps them in the
+basic structure of the site (logo, nav, footer, etc.). It also handles the
+title of the site, and any status mesage or error message. These must be
+stored under the C<title>, C<status_msg>, and C<error_msg> keys in the args
+hash, respectively.
+
 =head1 SEE ALSO
 
 =over
