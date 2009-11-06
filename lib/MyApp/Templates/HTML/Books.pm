@@ -5,6 +5,24 @@ use warnings;
 use parent 'Template::Declare::Catalyst';
 use Template::Declare::Tags;
 
+template list => sub {
+    my ($self, $args) = @_;
+    table {
+        row {
+            th { 'Title'  };
+            th { 'Rating' };
+            th { 'Author' };
+        };
+        for my $book (@{ $args->{books} }) {
+            row {
+                cell { $book->{title}  };
+                cell { $book->{rating} };
+                cell { $book->{author} };
+            };
+        }
+    };
+};
+
 =head1 NAME
 
 MyApp::Templates::HTML::Books - HTML::Books templates for MyApp
