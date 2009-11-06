@@ -13,13 +13,14 @@ template list => sub {
             th { 'Rating' };
             th { 'Author' };
         };
-        for my $book (@{ $args->{books} }) {
+        my $sth = $args->{books};
+        while (my $book = $sth->fetchrow_hashref) {
             row {
                 cell { $book->{title}  };
                 cell { $book->{rating} };
                 cell { $book->{author} };
             };
-        }
+        };
     };
 };
 

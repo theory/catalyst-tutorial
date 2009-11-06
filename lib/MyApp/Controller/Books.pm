@@ -29,8 +29,11 @@ sub index :Path :Args(0) {
 
 sub list : Local {
     my ($self, $c) = @_;
-    $c->stash->{books} = [];
-    $c->stash->{template} = '/books/list';
+    $c->stash->{books} = $c->conn->run(fixup => sub {
+        my $sth = $_->prepare('SELECT isbn, title, rating FROM books');
+        $sth->execute;
+        $sth;
+    });
 }
 
 =head1 AUTHOR
