@@ -10,6 +10,7 @@ requires 'Catalyst::Runtime' => '5.80013';
 requires 'Catalyst::Plugin::ConfigLoader';
 requires 'Catalyst::Plugin::Static::Simple';
 requires 'Catalyst::Action::RenderView';
+requires 'Catalyst::View::TD' => '0.11';
 requires 'DBIx::Connector' => '0.30';
 requires 'Exception::Class::DBI' => '1.00';
 requires 'parent';
