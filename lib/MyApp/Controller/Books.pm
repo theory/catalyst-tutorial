@@ -27,6 +27,11 @@ sub index :Path :Args(0) {
     $c->response->body('Matched MyApp::Controller::Books in Books.');
 }
 
+sub list : Local {
+    my ($self, $c) = @_;
+    $c->stash->{books} = [];
+    $c->stash->{template} = '/books/list';
+}
 
 =head1 AUTHOR
 
