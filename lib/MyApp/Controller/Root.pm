@@ -24,6 +24,9 @@ MyApp::Controller::Root - Root Controller for MyApp
 
 =head2 index
 
+The default Catalyst action, which just displays the welcome message. This is
+the "Yay it worked!" page. Consider changing to a real home page for our app.
+
 =cut
 
 sub index :Path :Args(0) {
@@ -32,6 +35,13 @@ sub index :Path :Args(0) {
     # Hello World
     $c->response->body( $c->welcome_message );
 }
+
+=head2 default
+
+The default action. Just returns a 404/NOT FOUND error. Might want to update
+later with a template to format the error like the rest of our site.
+
+=cut
 
 sub default :Path {
     my ( $self, $c ) = @_;

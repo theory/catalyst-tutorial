@@ -14,10 +14,11 @@ Catalyst Controller.
 
 =head1 METHODS
 
-=cut
-
-
 =head2 index
+
+The default method for the books controller. Currently just says that it
+matches the request; we'll likely want to change it to something more
+reasonable down the line.
 
 =cut
 
@@ -26,6 +27,14 @@ sub index :Path :Args(0) {
 
     $c->response->body('Matched MyApp::Controller::Books in Books.');
 }
+
+=head2 list
+
+Looks up all of the books in the system and executes a template to display
+them in a nice table. The data includes the title, rating, and authors of each
+book
+
+=cut
 
 sub list : Local {
     my ($self, $c) = @_;
