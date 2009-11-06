@@ -1,0 +1,9 @@
+_build
+blib
+MyApp-*
+MANIFEST
+MANIFEST.bak
+*META.*
+Build
+Makefile
+inc
