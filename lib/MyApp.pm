@@ -17,12 +17,12 @@ use Exception::Class::DBI;
 #                 directory
 
 use parent qw/Catalyst/;
-use Catalyst qw/
-    -Debug
+use Catalyst (qw(
     ConfigLoader
     Static::Simple
     StackTrace
-/;
+), $ENV{HARNESS_ACTIVE} ? () : '-Debug');
+
 our $VERSION = '0.01';
 
 # Configure the application.
