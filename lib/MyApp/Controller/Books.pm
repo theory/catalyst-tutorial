@@ -32,7 +32,9 @@ sub list : Local {
     my $stash = $c->stash;
     $stash->{title} = 'Book List';
     $stash->{books} = $c->conn->run(fixup => sub {
-        my $sth = $_->prepare('SELECT isbn, title, rating FROM books');
+        my $sth = $_->prepare(q{
+            SELECT isbn, title, rating, authors FROM books_with_authors
+        });
         $sth->execute;
         $sth;
     });
