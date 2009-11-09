@@ -16,9 +16,9 @@ create_wrapper wrapper => sub {
             title { $args->{title} || 'My Catalyst App!' };
             link {
                 rel is 'stylesheet';
+                type is 'text/css';
                 href is $c->uri_for('/static/css/main.css' );
             };
-
         };
 
         body {

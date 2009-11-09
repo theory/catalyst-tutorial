@@ -1,7 +1,8 @@
 use strict;
 use warnings;
-use Test::More tests => 5;
-# use Test::XPath;
+#use Test::More tests => 5;
+use Test::More 'no_plan';
+use Test::XPath;
 use Test::MockObject::Extends;
 
 BEGIN {
@@ -27,11 +28,31 @@ ok my $output = $view->render($c, 'books/list', {
     title => 'Book List',
     books => $sth,
 }), 'Render the "books/list" template';
+#diag $output;
 
-__END__
+# Test output using Test::XPath.
+my $tx = Test::XPath->new( xml => $output, is_html => 1);
+test_basics($tx, 'Book List');
 
-# Test output using Test::XPath or similar.
-# my $tx = Test::XPath->new( xml => $output, is_html => 1);
-# $tx->ok('/html', 'Should have root html element');
-# $tx->is('/html/head/title', 'Hello, Theory', 'Title should be correct');
+# Call this function for every request to make sure that they all
+# have the same basic structure.
+sub test_basics {
+    my ($tx, $title) = @_;
 
+    # Some basic sanity-checking.
+    $tx->is( 'count(/html)',      1, 'Should have 1 html element' );
+    $tx->is( 'count(/html/head)', 1, 'Should have 1 head element' );
+    $tx->is( 'count(/html/body)', 1, 'Should have 1 body element' );
+
+    # Check the head element.
+    $tx->is(
+        '/html/head/title',
+        $title,
+        'Title should be corect'
+    );
+    $tx->is(
+        '/html/head/link[@type="text/css"][@rel="stylesheet"]/@href',
+        '/static/css/main.css',
+        'Should load the CSS',
+    );
+}
