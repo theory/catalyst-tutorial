@@ -1,7 +1,7 @@
 use strict;
 use warnings;
-#use Test::More tests => 5;
-use Test::More 'no_plan';
+use Test::More tests => 54;
+#use Test::More 'no_plan';
 use Test::XPath;
 use Test::MockObject::Extends;
 
@@ -19,7 +19,9 @@ $mocker->mock( uri_for => sub { $_[1]} );
 
 # Create a statement handle for books/list.
 my $sth = $c->conn->run(sub { $_->prepare(q{
-    SELECT isbn, title, rating, authors FROM books_with_authors
+    SELECT isbn, title, rating, authors
+      FROM books_with_authors
+     ORDER BY title
 }) });
 $sth->execute;
 
@@ -41,7 +43,83 @@ $tx->ok('/html/body/div[@id="bodyblock"]/div[@id="content"]/table', sub {
         $_->is('./th[1]', 'Title', '... first is "Title"');
         $_->is('./th[2]', 'Rating', '... second is "Rating"');
         $_->is('./th[3]', 'Authors', '... third is "Authors"');
-    }, 'Should have first table row')
+    }, 'Should have first table row');
+
+    $_->ok('./tr[2]', sub {
+        $_->is('count(./td)', 3, 'Should have three cells');
+        $_->is(
+            './td[1]',
+            'CCSP SNRS Exam Certification Guide',
+            '... first is "CCSP SNRS Exam Certification Guide"'
+        );
+        $_->is('./td[2]', 5, '... second is "5"');
+        $_->is(
+            './td[3]',
+            'Bastien, Nasseh, Degu',
+            '... third is "Bastien, Nasseh, Degu"',
+        );
+    }, 'Should have second table row');
+
+    $_->ok('./tr[3]', sub {
+        $_->is('count(./td)', 3, 'Should have three cells');
+        $_->is(
+            './td[1]',
+            'Designing with Web Standards',
+            '... first is "Designing with Web Standards"'
+        );
+        $_->is('./td[2]', 5, '... second is "5"');
+        $_->is(
+            './td[3]',
+            'Zeldman',
+            '... third is "Zeldman"',
+        );
+    }, 'Should have third table row');
+
+    $_->ok('./tr[4]', sub {
+        $_->is('count(./td)', 3, 'Should have three cells');
+        $_->is(
+            './td[1]',
+            'Internetworking with TCP/IP Vol.1',
+            '... first is "Internetworking with TCP/IP Vol.1"'
+        );
+        $_->is('./td[2]', 4, '... second is "4"');
+        $_->is(
+            './td[3]',
+            'Comer',
+            '... third is "Comer"',
+        );
+    }, 'Should have fourth table row');
+
+    $_->ok('./tr[5]', sub {
+        $_->is('count(./td)', 3, 'Should have three cells');
+        $_->is(
+            './td[1]',
+            'Perl Cookbook',
+            '... first is "Perl Cookbook"',
+        );
+        $_->is('./td[2]', 5, '... second is "5"');
+        $_->is(
+            './td[3]',
+            'Christiansen, Torkington',
+            '... third is "Christiansen, Torkington"',
+        );
+    }, 'Should have fifth table row');
+
+    $_->ok('./tr[6]', sub {
+        $_->is('count(./td)', 3, 'Should have three cells');
+        $_->is(
+            './td[1]',
+            'TCP/IP Illustrated, Volume 1',
+            '... first is "TCP/IP Illustrated, Volume 1"'
+        );
+        $_->is('./td[2]', 5, '... second is "5"');
+        $_->is(
+            './td[3]',
+            'Stevens',
+            '... third is "Stevens"',
+        );
+    }, 'Should have sixth table row');
+
 }, 'Should have a table');
 
 
