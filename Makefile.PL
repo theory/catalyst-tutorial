@@ -15,6 +15,7 @@ requires 'DBIx::Connector' => '0.30';
 requires 'Exception::Class::DBI' => '1.00';
 requires 'parent';
 requires 'Config::General'; # This should reflect the config file format you've chosen
+requires 'Test::MockObject';
                  # See Catalyst::Plugin::ConfigLoader for supported formats
 catalyst;
 
