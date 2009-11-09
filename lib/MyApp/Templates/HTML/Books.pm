@@ -11,9 +11,9 @@ template list => sub {
     wrapper {
         table {
             row {
-                th { 'Title'  };
-                th { 'Rating' };
-                th { 'Author' };
+                th { 'Title'   };
+                th { 'Rating'  };
+                th { 'Authors' };
             };
             my $sth = $args->{books};
             while (my $book = $sth->fetchrow_hashref) {

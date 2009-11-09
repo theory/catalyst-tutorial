@@ -28,11 +28,22 @@ ok my $output = $view->render($c, 'books/list', {
     title => 'Book List',
     books => $sth,
 }), 'Render the "books/list" template';
-diag $output;
+#diag $output;
 
 # Test output using Test::XPath.
 my $tx = Test::XPath->new( xml => $output, is_html => 1);
 test_basics($tx, 'Book List');
+
+$tx->ok('/html/body/div[@id="bodyblock"]/div[@id="content"]/table', sub {
+    $_->is('count(./tr)', 6, 'Should have six rows' );
+    $_->ok('./tr[1]', sub {
+        $_->is('count(./th)', 3, 'Should have three table headers');
+        $_->is('./th[1]', 'Title', '... first is "Title"');
+        $_->is('./th[2]', 'Rating', '... second is "Rating"');
+        $_->is('./th[3]', 'Authors', '... third is "Authors"');
+    }, 'Should have first table row')
+}, 'Should have a table');
+
 
 # Call this function for every request to make sure that they all
 # have the same basic structure.
